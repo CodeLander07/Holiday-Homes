@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
 const app = express();
+const path = require('path');
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 //momgodb connection string
 const MONGOURL = "mongodb://127.0.0.1:27017/wanderlust";
-
-
-
 
 main()
 .then(() =>{
@@ -31,16 +31,24 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/testListing', async (req, res) => {
-    let sampleListing = new Listing({
-        title: 'Eagle Palace',
-        description: 'Best Hotel in Pachora',
-        price: 100,
-        location: 'Jalgoan',
-        country: 'India'
-    });
+// app.get('/testListing', async (req, res) => {
+//     let sampleListing = new Listing({
+//         title: 'Eagle Palace',
+//         description: 'Best Hotel in Pachora',
+//         price: 100,
+//         location: 'Jalgoan',
+//         country: 'India'
+//     });
 
-    await sampleListing.save();
-    console.log('Listing saved:', sampleListing);
-    res.send('Listing saved!');
+//     await sampleListing.save();
+//     console.log('Listing saved:', sampleListing);
+//     res.send('Listing saved!');
+// });
+
+
+app.get('/listings', async (req, res) => {
+ 
+    let allListings = await Listing.find({});
+    res.render("listings/index.ejs", { allListings });
+  
 });
