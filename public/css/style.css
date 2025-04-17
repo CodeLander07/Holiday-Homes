@@ -15,7 +15,7 @@ background-color: white;
 .nav-link{
     color: #222222 !important;
 }
-.f-info{
+.f-info {
     display: flex;
     height: 8rem;
     background-color: #f8f9fa;
@@ -23,20 +23,30 @@ background-color: white;
     justify-content: center;
     align-items: space-evenly;
     text-align: center;
-
-}
- .f-info-links , .f-info-socials{
+    position: fixed;
+    bottom: 0;
     width: 100%;
+}
+ .f-info-links , .f-info-socials , .f-info-brand{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+
+   
     
 }
 .f-info-socials{
     width: 100%;
     
     
+    
 }
 .f-info-socials i{
     font-size: 1.5rem;
     margin-right: 2rem;
+    cursor: pointer;
 }
 .f-info-links a{
 text-decoration: none;
