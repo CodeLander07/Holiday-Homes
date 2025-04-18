@@ -3,12 +3,27 @@
     <h1>All Listings</h1>
     <form method="GET" action="/listings/new">
       <button>Create New Listing</button>
-    </form>
-    <ul>
-      <% for(let listing of allListings) { %>
-        <li>
-          <h2><a href="/listings/<%= listing.id %>"><%= listing.title %></a></h2>
-        </li>
-      <% } %>
-    </ul>
+    </form> 
+<div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 g-4">
+  
+  <% for(let listing of allListings) { %>
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="card col" style="width: 18rem;">
+      <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+      <div class="card-img-overlay">Its card-img-overlay</div>
+      <div class="card-body">
+        <p class="card-text">
+          
+          <b><%= listing.title %></b><br>
+          
+          &#8377; <%= listing.price.toLocaleString("en-IN") %><br>
+          <%= listing.location %><br>
+        </p>
+      </div>
+    </div>
+  </a>
+    <% } %>
+</div>
+  
+    
 </body>
