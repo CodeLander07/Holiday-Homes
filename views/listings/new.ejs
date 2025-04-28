@@ -6,7 +6,9 @@
     <form method="POST" class="needs-validation" novalidate action="/listings">
       <div class="mb-3">
         <label for="title" class="form-lable ">Title</label>
-        <input name="listing[title]" placeholder="Enter title" type="text" class="form-control" />
+        <input name="listing[title]" placeholder="Enter title" type="text" class="form-control"
+        required />
+        <div class="valid-feedback">Title Looks Good</div>
       </div>
       
 
