@@ -7,7 +7,8 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 
 
-
+// In your main app.js or server.js
+app.use(express.urlencoded({ extended: true }));
 
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -40,7 +41,7 @@ async function main() {
 
 
 app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port http://localhost:3000');
 } );
 
 app.get('/', (req, res) => {    
@@ -61,6 +62,7 @@ app.get('/listings', async (req, res) => {
 
 //Create Route
 app.post("/listings", async (req, res) => {
+  console.log(req.body);
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");

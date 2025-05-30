@@ -6,15 +6,32 @@ const listingSchema = new Schema({
     title: {
         type: String,
         required: true,
+        trim: true
     },
-    description: String,
+    description: {
+        type: String,
+        required: true,
+        trim: true
+    },
     image: {
-        filename: { type: String, required: true },
-        url: { type: String, required: true },
+        url: String,
+        filename: String
     },
-    price: Number,
-    location: String,
-    country: String,
+    price: {
+        type: Number,
+        required: true,
+        min: [0, 'Price must be positive']
+    },
+    location: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    country: {
+        type: String,
+        required: true,
+        trim: true
+    }
 });
 
 const Listing = mongoose.model('Listing', listingSchema);
