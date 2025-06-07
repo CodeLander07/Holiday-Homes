@@ -5,7 +5,9 @@ const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate'); 
 const methodOverride = require('method-override');
-
+const wrapAsync = require('./utils/wrapAsync.js');
+const ExpressError = require('./utils/expressErrors.js');
+const { wrap } = require('module');
 
 // In your main app.js or server.js
 app.use(express.urlencoded({ extended: true }));
@@ -53,20 +55,20 @@ app.get('/', (req, res) => {
 
 
 //Index ROute
-app.get('/listings', async (req, res) => {
+app.get('/listings',wrapAsync( async (req, res) => {
     
     let allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
   
-});
+}));
 
 //Create Route
-app.post("/listings", async (req, res) => {
-  console.log(req.body);
+app.post("/listings", wrapAsync( async (req, res) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
-  });
+}));
+
 
 //New Route
 app.get("/listings/new", (req, res) => {
@@ -74,7 +76,7 @@ app.get("/listings/new", (req, res) => {
   });
 
 //Show Route
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id",wrapAsync (async (req, res) => {
     let { id } = req.params;
     id = id.trim(); 
     try {
@@ -87,27 +89,35 @@ app.get("/listings/:id", async (req, res) => {
         console.error("Error fetching listing:", err);
         res.status(400).send("Invalid Listing ID");
     }
-});
+}));
 
   //Edit Route
-  app.get("/listings/:id/edit", async (req, res) => {
+  app.get("/listings/:id/edit", wrapAsync( async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/edit.ejs", { listing });
-  });
+  }));
   
   //Update Route
-  app.put("/listings/:id", async (req, res) => {
+  app.put("/listings/:id", wrapAsync( async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect(`/listings/${id}`);
-  });
+  }));
   
   //Delete Route
-  app.delete("/listings/:id", async (req, res) => {
+  app.delete("/listings/:id",wrapAsync( async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
     res.redirect("/listings");
-  });
+  }));
 
+
+
+  //custom error
+  app.use((err, req, res, next) => {
+    // console.error(err.stack);
+    let {statusCode = 500 , message = "Something Went Wrong"} = err;
+    res.status(statusCode).send(message)
+  });
