@@ -8,10 +8,22 @@ body{
 .container{
     flex: 1;
 }
+.container-fluid h1 {
+    color: #fe424d;
+    font-size: 1.5rem;
+    font-family:"Plus Jakarta Sans", sans-serif;
+    margin: 1rem 0;
+}
 .navbar{
 height: 5rem;
 position: sticky;
 background-color: white;
+}
+.nav-img{
+    width: 2rem;
+    height: 2rem;
+    margin: 0 1.5rem;
+    /* border-radius: 50%; */
 }
 .fa-compass{
     color:#fe424d;
