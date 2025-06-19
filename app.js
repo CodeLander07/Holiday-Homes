@@ -25,6 +25,7 @@ require('dotenv').config();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 //momgodb connection string
 const MONGOURL = process.env.MONGOURL;
+const PORT = process.env.PORT || 3000;
 
 main()
 .then(() =>{
@@ -43,7 +44,7 @@ async function main() {
 
 
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('Server is running on port http://localhost:3000');
 } );
 

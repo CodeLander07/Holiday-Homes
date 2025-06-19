@@ -2,8 +2,8 @@ const mongoose  = require('mongoose');
 const initdata = require('./data.js');
 const Listing = require('../models/listing.js');
 
-
-const MONGOURL = "mongodb://127.0.0.1:27017/wanderlust";
+require('dotenv').config();
+const MONGOURL = "mongodb+srv://mayurnikumbh2004:Mayur%402004@cluster0.zevirxf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 main()
 .then(() =>{
