@@ -24,7 +24,7 @@ app.use(methodOverride('_method'));
 
 
 //momgodb connection string
-const MONGOURL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGOURL = "mongodb+srv://mayurnikumbh2004:<db_password>@cluster0.zevirxf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 main()
 .then(() =>{
