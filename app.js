@@ -24,7 +24,7 @@ app.use(methodOverride('_method'));
 
 
 //momgodb connection string
-const MONGOURL = "mongodb+srv://mayurnikumbh2004:Mayur@2004@cluster0.zevirxf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGOURL = "mongodb+srv://mayurnikumbh2004:Mayur%402004@cluster0.zevirxf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 main()
 .then(() =>{
