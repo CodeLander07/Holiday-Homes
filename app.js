@@ -19,10 +19,10 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+require('dotenv').config();
 
 
-
-
+const { MongoClient, ServerApiVersion } = require('mongodb');
 //momgodb connection string
 const MONGOURL = process.env.MONGOURL;
 
