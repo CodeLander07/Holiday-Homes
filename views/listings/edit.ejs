@@ -13,29 +13,48 @@
 
       <div class="mb-3">
         <label for="description" class="form-lable">Description</label>
-        <textarea required name="listing[description]" class="form-control">
-          <%= listing.description %></textarea>
-          <div class="invalid-feedback">Enter a description</div>
+        <textarea required name="listing[description]" class="form-control"><%= listing.description %></textarea>
+        <div class="invalid-feedback">Enter a description</div>
       </div>
 
+      <!-- Replace single image input with two inputs -->
       <div class="mb-3">
-        <label for="image" class="form-lable">Image Link</label>
-        <input name="listing[image]" required value="<%= listing.image.url %>" type="text" class="form-control" />
-        <div class="invalid-feedback">Enter a valid Url</div>
+        <label for="imageUrl" class="form-label">Image URL</label>
+        <input
+          name="listing[image][url]"
+          required
+          value="<%= listing.image.url %>"
+          type="text"
+          class="form-control"
+        />
+        <div class="invalid-feedback">Enter Link</div>
       </div>
-    <div class="row">
-      <div class="mb-3 col-4">
-        <label for="price" class="form-lable">Price</label>
-        <input name="listing[price]" required value="<%= listing.price %>" type="number" class="form-control" />
-        <div class="invalid-feedback">Enter a valid Price</div>
+      
+      <div class="mb-3">
+        <label for="imageFilename" class="form-label">Image Filename</label>
+        <input
+          name="listing[image][filename]"
+          required
+          value="<%= listing.image.filename %>"
+          type="text"
+          class="form-control"
+        />
+        <div class="invalid-feedback">Enter FileName</div>
       </div>
-    
-      <div class="mb-3 col-8">
-        <label for="country" class="form-lable">Country</label>
-        <input name="listing[country]" required value="<%= listing.country %>" type="text" class="form-control" />
-        <div class="invalid-feedback">Enter Country</div>
+
+      <div class="row">
+        <div class="mb-3 col-4">
+          <label for="price" class="form-lable">Price</label>
+          <input name="listing[price]" required value="<%= listing.price %>" type="number" class="form-control" />
+          <div class="invalid-feedback">Enter a valid Price</div>
+        </div>
+      
+        <div class="mb-3 col-8">
+          <label for="country" class="form-lable">Country</label>
+          <input name="listing[country]" required value="<%= listing.country %>" type="text" class="form-control" />
+          <div class="invalid-feedback">Enter Country</div>
+        </div>
       </div>
-    </div>
 
       <div class="mb-3">
         <label for="location" class="form-lable">Location</label>
@@ -47,7 +66,7 @@
     </form>
   </div>
 </div>
-<script >
+<script>
   (function () {
     'use strict'
     var forms = document.querySelectorAll('.needs-validation')

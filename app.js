@@ -23,6 +23,7 @@ require('dotenv').config();
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { chownSync } = require('fs');
 //momgodb connection string
 const MONGOURL = process.env.MONGOURL;
 const PORT = process.env.PORT || 3000;
@@ -53,11 +54,23 @@ app.get('/', (req, res) => {
 });
 
 
+const validateListing = (req, res, next) => {
+    let { error } = listingSchema.validate(req.body);
+    if(error){
+        let errorMessage = error.details.map(el => el.message).join(', ');
+        throw new ExpressError(errorMessage, 400);
+    }
+    else{
+        next();
+    }
+}
 
 
 
 //Index ROute
-app.get('/listings',wrapAsync( async (req, res) => {
+app.get('/listings',
+    validateListing
+    ,wrapAsync( async (req, res) => {
     
     let allListings = await Listing.find({});
     res.render("listings/index.ejs", { allListings });
@@ -65,7 +78,12 @@ app.get('/listings',wrapAsync( async (req, res) => {
 }));
 
 //Create Route
-app.post("/listings", wrapAsync( async (req, res) => {
+app.post("/listings",validateListing, wrapAsync( async (req, res) => {
+
+   let res = listingSchema.validateAsync(req.body);
+   console.log(res);
+
+    
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -121,5 +139,5 @@ app.get("/listings/:id",wrapAsync (async (req, res) => {
   app.use((err, req, res, next) => {
     // console.error(err.stack);
     let {statusCode = 500 , message = "Something Went Wrong"} = err;
-    res.status(statusCode).send(message)
+    res.render('error.ejs', { statusCode, message });
   });
