@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const wrapAsync = require('./utils/wrapAsync.js');
 const ExpressError = require('./utils/expressErrors.js');
 const { wrap } = require('module');
+const { listingSchema } = require('./schema.js');
 
 // In your main app.js or server.js
 app.use(express.urlencoded({ extended: true }));
@@ -80,8 +81,8 @@ app.get('/listings',
 //Create Route
 app.post("/listings",validateListing, wrapAsync( async (req, res) => {
 
-   let res = listingSchema.validateAsync(req.body);
-   console.log(res);
+   let result = listingSchema.validateAsync(req.body);
+   console.log(result);
 
     
     const newListing = new Listing(req.body.listing);

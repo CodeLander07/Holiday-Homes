@@ -14,6 +14,7 @@ const listingSchema = new Schema({
         trim: true
     },
     image: {
+        // type:String,
         url: String,
         filename: String
     },
@@ -31,7 +32,13 @@ const listingSchema = new Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 });
 
 const Listing = mongoose.model('Listing', listingSchema);
