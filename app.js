@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
+const Review = require('./models/review.js');
 const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate'); 
@@ -9,13 +10,13 @@ const wrapAsync = require('./utils/wrapAsync.js');
 const ExpressError = require('./utils/expressErrors.js');
 const { wrap } = require('module');
 const { listingSchema } = require('./schema.js');
+const { reviewSchema } = require('./schema.js');
 
 // In your main app.js or server.js
 app.use(express.urlencoded({ extended: true }));
 
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
@@ -57,6 +58,16 @@ app.get('/', (req, res) => {
 
 const validateListing = (req, res, next) => {
     let { error } = listingSchema.validate(req.body);
+    if(error){
+        let errorMessage = error.details.map(el => el.message).join(', ');
+        throw new ExpressError(errorMessage, 400);
+    }
+    else{
+        next();
+    }
+}
+const validateReview = (req, res, next) => {
+    let { error } = reviewSchema.validate(req.body);
     if(error){
         let errorMessage = error.details.map(el => el.message).join(', ');
         throw new ExpressError(errorMessage, 400);
@@ -145,7 +156,7 @@ app.get("/listings/:id",wrapAsync (async (req, res) => {
 
 
   //add review
-  app.post("/listings/:id/reviews" , async(req , res) =>{
+  app.post("/listings/:id/reviews" , validateReview, wrapAsync(async(req , res) =>{
 
     let listing = await Listing.findById(req.params.id);
     let newReview = new Review(req.body.review);
@@ -157,4 +168,4 @@ app.get("/listings/:id",wrapAsync (async (req, res) => {
 
     console.log("Review Added");
     res.redirect(`/listings/${listing._id}`);
-  })
+  }));
