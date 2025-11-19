@@ -142,3 +142,19 @@ app.get("/listings/:id",wrapAsync (async (req, res) => {
     let {statusCode = 500 , message = "Something Went Wrong"} = err;
     res.render('error.ejs', { statusCode, message });
   });
+
+
+  //add review
+  app.post("/listings/:id/reviews" , async(req , res) =>{
+
+    let listing = await Listing.findById(req.params.id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    
+
+    console.log("Review Added");
+    res.redirect(`/listings/${listing._id}`);
+  })
