@@ -108,11 +108,12 @@ app.get("/listings/new", (req, res) => {
   });
 
 //Show Route
-app.get("/listings/:id",wrapAsync (async (req, res) => {
+app.get("/listings/:id",
+    wrapAsync (async (req, res) => {
     let { id } = req.params;
     id = id.trim(); 
     try {
-        const listing = await Listing.findById(id);
+        const listing = await Listing.findById(id).populate('reviews');
         if (!listing) {
             return res.status(404).send("Listing not found");
         }
