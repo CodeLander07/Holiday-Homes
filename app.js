@@ -24,6 +24,27 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const { chownSync } = require('fs');
 const { resolveAny } = require('dns');
 
+// session options and middleware must be registered before routes
+const sessionOptions = {
+    secret: process.env.SESSION_SECRET || "Mysecretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires : Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge : 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true
+    }
+}
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+});
+
 
 //mongodb connection string
 const MONGOURL = process.env.MONGOURL;
@@ -43,16 +64,6 @@ async function main() {
     
 }
 
-const sessionOptions = {
-    secret: "Mysecretcode",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        expires : Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge : 1000 * 60 * 60 * 24 * 7, 
-        httpOnly: true
-    }
-}
 
 app.listen(PORT, () => {
     console.log('Server is running on port http://localhost:3000');
@@ -62,15 +73,6 @@ app.get('/', (req, res) => {
     res.render("listings/home.ejs");
 });
 
-//session and flash middleware
-app.use(session(sessionOptions));
-app.use(flash());
-
-app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    next();
-})
 
 //routes
 app.use('/listings', listings);
