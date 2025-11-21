@@ -6,8 +6,10 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const listings = require('./Routes/listing.js'); 
 const reviews = require('./Routes/review.js');
+const user = require('./Routes/user.js');
 const session = require('express-session');
 const flash = require('connect-flash');
+
 
 //passport setup
 const passport = require('passport');
@@ -88,10 +90,26 @@ app.get('/', (req, res) => {
 });
 
 
+//demo user route
+// app.get("/demouser" , async(req,res) =>{
+
+//     let user = new User({
+//         username: "demouser",
+//         email: "demouser@example.com"
+
+//     });
+
+//     User.register(user, "demopassword");
+
+//     res.send(user);
+
+// })
+
+
 //routes
 app.use('/listings', listings);
 app.use("/listings/:id/reviews", reviews);
-
+app.use("/", user);
 
 //custom error
   app.use((err, req, res, next) => {
