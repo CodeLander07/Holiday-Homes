@@ -9,6 +9,11 @@ const reviews = require('./Routes/review.js');
 const session = require('express-session');
 const flash = require('connect-flash');
 
+//passport setup
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user.js');
+
 // In your main app.js or server.js
 app.use(express.urlencoded({ extended: true }));
 app.engine('ejs', ejsMate);
@@ -39,6 +44,15 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+//passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+//flash middleware
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
