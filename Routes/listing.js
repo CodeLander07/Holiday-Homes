@@ -52,7 +52,8 @@ router.get("/:id",
     try {
         const listing = await Listing.findById(id).populate('reviews');
         if (!listing) {
-            return res.status(404).send("Listing not found");
+            req.flash('error', 'Listing not found!');
+            return res.redirect('/listings');
         }
         res.render("listings/show.ejs", { listing });
     } catch (err) {
