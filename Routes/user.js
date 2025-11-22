@@ -19,7 +19,15 @@ router.post("/login" ,
     res.redirect("/listings");
 });
 
-
+router.get("/logout" , (req, res) => {
+    req.logout((err) => {
+        if(err){
+            return next(err);
+        }
+    });
+    req.flash('success', 'You have logged out successfully!');
+    res.redirect("/listings");
+});
 
 router.post("/signup" , async (req, res) => {
     try{
