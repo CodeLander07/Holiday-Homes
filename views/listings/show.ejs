@@ -44,10 +44,11 @@
   </div>
 
   <!-- review form -->
+  
   <div class="col-8 offset-3 mb-3">
   <hr>
+   <% if(currentUser){ %>
   <h4>Write a review</h4>
-  
   <form action="/listings/<%= listing._id %>/reviews" method="POST" novalidate class="needs-validation">
     
     <div class="mb-3">
@@ -78,14 +79,18 @@
   </form>
 
   <hr>
+  
+  <% } %>
+
+  <!-- reviews display -->
   <h4>Reviews</h4>
 
-  <div class="row ">
+  <div class="row">
 
     <% for(reviews of listing.reviews) { %>
     <div class="card col-5 ms-3 p-4 mb-3">
      <div class="card-body">
-       <h5 class="card-title">Mayur</h5>
+       <h5 class="card-title"><%= reviews.author.username %></h5>
        <h6 class="card-subtitle mb-2 text-muted">Comment: <%= reviews.comment %></h6>
        <h6 class="card-subtitle mb-2 text-muted">Rating: <%= reviews.rating %> &#9734;</h6>
      </div>
