@@ -28,19 +28,19 @@
       </div>
     </div>
 
-  
-  
+   <!-- Edit and Delete buttons -->
     <br>
+
+   <% if(currentUser && currentUser._id.equals(listing.owner._id)) { %>
     <div class="btns">
-      <!-- Edit button -->
+
       <a class="btn btn-dark add-btn mb-3 col-1 offset-3" href="/listings/<%= listing._id %>/edit">Edit</a>
-      <!-- Delete button -->
+
       <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
       <button class="btn btn-dark  mb-3 offset-3">Delete</button>
       </form>
     </div>
-
-   
+    <% } %>
   </div>
 
   <!-- review form -->

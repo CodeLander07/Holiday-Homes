@@ -16,7 +16,7 @@ const validateListing = (req, res, next) => {
         next();
     }
 }
-//Index ROute
+//Index Route
 router.get('/',
     validateListing
     ,wrapAsync( async (req, res) => {
@@ -43,7 +43,6 @@ router.post("/",validateListing, isLoggedIn, wrapAsync( async (req, res) => {
 
 //New Route
 router.get("/new", isLoggedIn, (req, res) => {
-
     res.render("listings/new.ejs");
   });
 
@@ -59,7 +58,7 @@ router.get("/:id",
             return res.redirect('/listings');
         }
         
-        console.log(listing);
+       
         res.render("listings/show.ejs", { listing });
     } catch (err) {
         console.error("Error fetching listing:", err);

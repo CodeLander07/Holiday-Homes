@@ -27,10 +27,6 @@ app.use(methodOverride('_method'));
 require('dotenv').config();
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const { chownSync } = require('fs');
-const { resolveAny } = require('dns');
-
 // session options and middleware must be registered before routes
 const sessionOptions = {
     secret: process.env.SESSION_SECRET || "Mysecretcode",
@@ -89,22 +85,6 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {    
     res.render("listings/home.ejs");
 });
-
-
-//demo user route
-// app.get("/demouser" , async(req,res) =>{
-
-//     let user = new User({
-//         username: "demouser",
-//         email: "demouser@example.com"
-
-//     });
-
-//     User.register(user, "demopassword");
-
-//     res.send(user);
-
-// })
 
 
 //routes
