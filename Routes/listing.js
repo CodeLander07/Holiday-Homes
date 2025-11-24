@@ -34,6 +34,7 @@ router.post("/",validateListing, isLoggedIn, wrapAsync( async (req, res) => {
 
     
     const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash('success', 'Successfully created a new listing!');
     res.redirect("/listings");
@@ -52,11 +53,13 @@ router.get("/:id",
     let { id } = req.params;
     id = id.trim(); 
     try {
-        const listing = await Listing.findById(id).populate('reviews');
+        const listing = await Listing.findById(id).populate('reviews').populate('owner');
         if (!listing) {
             req.flash('error', 'Listing not found!');
             return res.redirect('/listings');
         }
+        
+        console.log(listing);
         res.render("listings/show.ejs", { listing });
     } catch (err) {
         console.error("Error fetching listing:", err);
