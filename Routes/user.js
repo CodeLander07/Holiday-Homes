@@ -4,11 +4,14 @@ const passport = require('passport');
 const { saveRedirectUrl } = require('../middleware.js');
 const userController = require('../controllers/user.controller.js');
 
-router.get("/signup", userController.renderSignup);
 
-router.get("/login" , userController.renderLogin);
+router.route("/signup")
+    .get(userController.renderSignup)
+    .post( userController.Signup);
 
-router.post("/login" ,saveRedirectUrl,passport.authenticate('local',{
+router.route("/login")
+    .get(userController.renderLogin)
+    .post(saveRedirectUrl,passport.authenticate('local',{
         failureFlash: true, 
         failureRedirect: '/login' , 
         failureFlash: 'Invalid username or password.'
@@ -16,7 +19,5 @@ router.post("/login" ,saveRedirectUrl,passport.authenticate('local',{
     ,userController.login);
 
 router.get("/logout" ,userController.logout );
-
-router.post("/signup" , userController.Signup);
 
 module.exports = router;
