@@ -27,7 +27,7 @@ module.exports.isOwner = async (req, res , next) =>{
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/listings/${id}`);
     }
-
+    next();
 }
 
 module.exports.validateListing = (req, res, next) => {

@@ -16,6 +16,7 @@ const flash = require('connect-flash');
 
 
 
+
 //passport setup
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -86,9 +87,9 @@ app.listen(PORT, () => {
     console.log('Server is running on port http://localhost:3000');
 } );
 
-// app.get('/', (req, res) => {    
-//     res.render("listings/home.ejs");
-// });
+app.get('/', (req, res) => {    
+    res.redirect("/listings");
+});
 
 
 //routes
