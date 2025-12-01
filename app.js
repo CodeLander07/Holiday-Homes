@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -9,6 +13,7 @@ const reviews = require('./Routes/review.js');
 const user = require('./Routes/user.js');
 const session = require('express-session');
 const flash = require('connect-flash');
+
 
 
 //passport setup
@@ -24,7 +29,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-require('dotenv').config();
 
 
 // session options and middleware must be registered before routes
