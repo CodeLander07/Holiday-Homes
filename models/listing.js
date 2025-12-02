@@ -43,6 +43,10 @@ const listingSchema = new Schema({
     owner:{
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    category:{
+        type: String,
+        enum:["Apartment", "House", "Condo", "Cabin", "Villa", "Cottage", "Bungalow", "Farmhouse", "Chalet", "Other"],
     }
 });
 
