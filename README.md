@@ -1,83 +1,113 @@
-# Hotel-Booking-Website
+# TripEasy - Hotel Management App
 
-A full-stack hotel booking website where users can browse listings, view details, and manage bookings.
+TripEasy is a full-stack web application designed to facilitate hotel management and booking. It allows users to list properties, view details, leave reviews, and manage their bookings. The application is built using the MEN stack (MongoDB, Express.js, Node.js) and follows the MVC (Model-View-Controller) architecture.
 
-## Tech Stack
+## 🚀 Features
 
-### Frontend
-- **HTML5**: For structuring the web pages.
-- **CSS3**: For styling the application.
-- **Bootstrap 5**: For responsive design and UI components.
-- **EJS**: For templating and dynamic rendering of views.
+- **User Authentication & Authorization:**
+  - Secure Sign Up and Login functionality using Passport.js.
+  - Authorization checks to ensure only owners can edit/delete their listings.
+- **CRUD Operations for Listings:**
+  - Users can Create, Read, Update, and Delete hotel listings.
+  - Upload images for listings (stored via Cloudinary).
+- **Review System:**
+  - Users can leave ratings and comments on listings.
+  - Reviews can be deleted by their authors.
+- **Responsive Design:**
+  - Built with Bootstrap for a mobile-friendly user interface.
+- **Data Validation:**
+  - Server-side validation using Joi to ensure data integrity.
+- **Session Management:**
+  - Persistent sessions using MongoDB (connect-mongo).
+- **Flash Messages:**
+  - Interactive feedback messages (success/error) for user actions.
+
+## 🛠️ Tech Stack & Dependencies
+
+The project utilizes the following technologies and libraries:
 
 ### Backend
-- **Node.js**: For server-side JavaScript runtime.
-- **Express.js**: For building the web server and handling routes.
-- **Mongoose**: For interacting with MongoDB.
+- **Node.js:** JavaScript runtime environment.
+- **Express.js:** Web framework for Node.js.
+- **Mongoose:** ODM for MongoDB.
+- **Passport.js:** Authentication middleware for Node.js.
+- **Joi:** Data validation library.
 
-### Database
-- **MongoDB**: For storing hotel listings and user data.
+### Frontend
+- **EJS (Embedded JavaScript):** Templating engine.
+- **EJS-Mate:** Layout support for EJS.
+- **Bootstrap:** CSS framework for styling.
 
----
+### Utilities & Middleware
+- **Cloudinary & Multer:** For handling image uploads and storage.
+- **Connect-Flash:** For displaying flash messages.
+- **Express-Session:** For managing user sessions.
+- **Method-Override:** To support PUT and DELETE requests in HTML forms.
+- **Dotenv:** For environment variable management.
 
-## GitHub Repository
+## 📂 Folder Structure
 
-Clone the repository using the following command:
-
-```bash
-git clone https://github.com/unstopablesid/Hotel-Booking-Website.git
+```
+TripEasy/
+├── controllers/        # Logic for handling requests (MVC Controller)
+├── init/               # Database initialization scripts
+├── models/             # Mongoose schemas and models (MVC Model)
+├── public/             # Static files (CSS, JS, Images)
+├── Routes/             # Express routes definitions
+├── utils/              # Utility functions (Error handling, wrappers)
+├── views/              # EJS templates (MVC View)
+├── app.js              # Main application entry point
+├── cloudConfig.js      # Cloudinary configuration
+├── middleware.js       # Custom middleware (Auth, Validation)
+├── schema.js           # Joi validation schemas
+├── .env                # Environment variables (not committed)
+└── package.json        # Project dependencies and scripts
 ```
 
-Install the dependencies using the following command:
+## ⚙️ Installation & Setup
 
-```bash
-npm install
-```
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/unstopablesid/Hotel-Booking-Website.git
+    cd Hotel-Booking-Website
+    ```
 
-Initialize the database using the following command:
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-```bash
-node init/index.js
-```
+3.  **Set up Environment Variables:**
+    Create a `.env` file in the root directory and add the following credentials:
+    ```env
+    CLOUD_NAME=your_cloudinary_cloud_name
+    CLOUD_API_KEY=your_cloudinary_api_key
+    CLOUD_API_SECRET=your_cloudinary_api_secret
+    MONGOURL=your_mongodb_connection_string
+    SESSION_SECRET=your_session_secret
+    ```
 
-## Folder Structure
+4.  **Initialize the Database (Optional):**
+    If you want to seed the database with initial data:
+    ```bash
+    node init/index.js
+    ```
 
-Hotel-Booking-Website/
-│
-├── [app.js](http://_vscodecontentref_/1)                  # Main application file
-├── init/
-│   ├── index.js            # Database initialization script
-│   ├── data.js             # Sample data for database seeding
-│
-├── models/
-│   ├── listing.js          # Mongoose schema for hotel listings
-│
-├── public/
-│   ├── css/
-│   │   ├── style.css       # Custom styles
-│   ├── images/             # Static images
-│
-├── views/
-│   ├── layout/
-│   │   ├── boilerplate.ejs # Layout template
-│   ├── listings/
-│   │   ├── index.ejs       # Page to display all listings
-│   │   ├── show.ejs        # Page to display a single listing
-│   │   ├── new.ejs         # Page to create a new listing
-│   │   ├── edit.ejs        # Page to edit a listing
-│   ├── includes/
-│   │   ├── navbar.ejs      # Navigation bar
-│   │   ├── footer.ejs      # Footer
-│
-├── node_modules/           # Node.js dependencies
-├── [package.json](http://_vscodecontentref_/2)            # Project metadata and dependencies
-├── [package-lock.json](http://_vscodecontentref_/3)       # Dependency tree lock file
-├── [README.md](http://_vscodecontentref_/4)               # Project documentation
+5.  **Run the Application:**
+    ```bash
+    node app.js
+    # OR for development with nodemon
+    npm run dev
+    ```
 
+6.  **Access the App:**
+    Open your browser and go to `http://localhost:3000`.
 
-Features
-View all hotel listings.
-View detailed information about a specific listing.
-Add, edit, and delete listings (CRUD operations).
-Responsive design for mobile and desktop.
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the ISC License.
 
