@@ -68,8 +68,8 @@ TripEasy/
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/unstopablesid/Hotel-Booking-Website.git
-    cd Hotel-Booking-Website
+    git clone https://github.com/CodeLander07/Holiday-Homes.git
+    cd Holiday-Homes
     ```
 
 2.  **Install dependencies:**
