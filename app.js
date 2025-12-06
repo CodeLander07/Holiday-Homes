@@ -111,6 +111,7 @@ app.use("/", user);
 
 //custom error
   app.use((err, req, res, next) => {
+    console.log(err);
     let {statusCode = 500 , message = "Something Went Wrong"} = err;
     res.render('error.ejs', { statusCode, message });
   });
