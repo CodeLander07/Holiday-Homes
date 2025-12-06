@@ -14,8 +14,7 @@ const user = require('./Routes/user.js');
 const session = require('express-session');
 const flash = require('connect-flash');
 
-
-
+const MongoStore = require('connect-mongo').default;
 
 //passport setup
 const passport = require('passport');
@@ -23,7 +22,6 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user.js');
 
 // In your main app.js or server.js
-app.use(express.urlencoded({ extended: true }));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
@@ -31,9 +29,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const store =  MongoStore.create({
+    mongoUrl : process.env.MONGOURL,
+    crypto:{
+        secret : process.env.SESSION_SECRET || "Mysecretcode"
+    },
+    touchAfter : 24 * 3600
+});
+
+store.on("error", (e) => {
+    console.log("SESSION STORE ERROR", e);
+});
 
 // session options and middleware must be registered before routes
 const sessionOptions = {
+    store : store,
     secret: process.env.SESSION_SECRET || "Mysecretcode",
     resave: false,
     saveUninitialized: true,
@@ -43,6 +53,8 @@ const sessionOptions = {
         httpOnly: true
     }
 }
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
